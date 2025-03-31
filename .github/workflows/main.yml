@@ -11,8 +11,7 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     steps:
-      - name: "Afficher le repertoire de travail"
-        run: ls
+      - run: ls
       - run: actions/checkout@v4
       - run: ls
       
