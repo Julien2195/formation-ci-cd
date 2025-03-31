@@ -1,0 +1,10 @@
+name: "Mon premier worklow"
+
+on: push
+
+jobs:
+  jobs:
+    runs-on: ubuntu:latest
+    stage:
+      - run: echo "Hello, world"
+
