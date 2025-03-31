@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "whoami"
-      - uses: actions/checkout@v4
+      - uses: actions/chec kout@v4
       - run: mkdir "repertoire_1"
       - run: echo "text a afifcher" > repertoire_1/test.txt
       - run: ls -la

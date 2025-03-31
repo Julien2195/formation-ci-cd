@@ -1,0 +1,33 @@
+name: "exo 6"
+
+on: "push"
+
+jobs:
+  policier-scene:
+    
+    name: "collecte les empreinte"
+    runs-on: ubuntu-latest
+    outputs: 
+      empreinte: "empreinte trouvée sur la caisse"
+    steps:
+      - run: echo "Le policier examine la caisse enregistreuse"
+      - run: echo "Empreinte prélevée sur la caisse"
+  policier-video:
+    runs-on: ubuntu-latest
+
+    outputs:
+      video: ${{steps.policier.outputs.resultat}}
+    steps:
+      - id: policier
+        run: echo "resultat=Séquence vidéo 22h15-22h45 récupérée" >> $GITHUB_OUTPUT
+  rapport-final:
+    runs-on: ubuntu-latest
+    outputs:
+        conclusion: echo ${{needs.policier-video.video }}
+    steps:
+    - run: echo "conclusion=${ANALYSE_EMPREINTE}, ${ANALYSE_VIDEO}, texte à ajouter" >> "$GITHUB_OUTPUT"
+
+
+
+
+
