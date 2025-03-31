@@ -3,8 +3,16 @@ name: "Mon premier worklow"
 on: push
 
 jobs:
-  jobs:
+  job1:
     runs-on: ubuntu:latest
     steps:
       - run: echo "Hello, world"
+      
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Afficher le repertoire de travail"
+        run: pwd
+      - run: echo "seconde step"
+      - run: ls
 
