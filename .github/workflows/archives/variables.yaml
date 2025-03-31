@@ -1,0 +1,22 @@
+name: "mes variables"
+on: push
+
+env:
+  VAR_FROM_WORKFLOW: "var from workflow"
+  
+jobs:
+  tests-variables:
+      env:
+        VAR_FROM_JOB: "VAR FROM JOB"
+      runs-on: ubuntu-latest
+      steps:
+        - name: "les variables"
+          env: 
+            VAR_FROM_STEP: "var form step"
+            VAR_SECRET_WORKFLOW: "var form step"
+          run: |
+              echo "VAR_FROM_WORKFLOW: ${VAR_FROM_WORKFLOW}"
+              echo "VAR_FROM_JOB: ${VAR_FROM_JOB}"
+              echo "VAR_FROM_STEP: ${VAR_FROM_STEP}"
+              echo "VARIABLE DE PROJET : ${SECRET_PROJECT}"
+              echo "SECRET DE PROJET: ${VAR_PROJECT}"

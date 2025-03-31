@@ -6,13 +6,15 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello, world"
-      
+      - run: echo "whoami"
+      - uses: actions/checkout@v4
+      - run: mkdir "repertoire_1"
+      - run: echo "text a afifcher" > repertoire_1/test.txt
+      - run: ls -la
+
   job2:
     runs-on: ubuntu-latest
     steps:
-      - run: ls
       - uses: actions/checkout@v4
       - run: ls
-      
 
