@@ -1,0 +1,60 @@
+name: "pizzeria"
+
+on: 
+  workflow_dispatch:
+    inputs:
+      nom_client:
+        description: "Pour identifier le client"
+        required: true
+      pizzas:
+        description: |
+          Liste des pizzas au format JSON. Attention aux points importants:
+          ["margherita","reine","calzone"]
+        required: true
+
+jobs:
+  reception-commande:
+    runs-on: ubuntu-latest
+    outputs:
+      client_name: ${{ steps.pizza_step.outputs.client_name }}
+      pizzas: ${{ steps.pizza_step.outputs.pizzas }}
+
+    steps:
+      - id: pizza_step
+        run: |
+          echo "client_name=${{ github.event.inputs.nom_client }}" >> $GITHUB_OUTPUT
+          echo "pizzas=${{ github.event.inputs.pizzas }}" >> $GITHUB_OUTPUT
+  cuisine:
+    needs: reception-commande
+    name: "cuisine"
+    strategy:
+      matrix:
+        pizzas: ${{ fromJSON(needs.reception-commande.outputs.pizzas)}}
+        taille: ["L", "XL"]
+        include:
+          - pizzas: "dessert"
+            taille: "M"
+    runs-on: ubuntu-latest 
+    steps:
+      - run:  | 
+          echo  "La pizzas ${{ matrix.pizzas}} est en cours de préparation et taille
+          de la pizzas ${{ matrix.taille }}"
+  livraison:
+    needs: cuisine
+    runs-on: ubuntu-latest
+    concurrency:
+      group:  ${{ github.github }}-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+    - run: |
+        echo "Preparation de la livraison pour ${{ needs.reception-commande.outputs.client_name }},
+         "les pizzas a récupérées sont : ${{ needs.reception-commande.outputs.pizzas }}
+  reclamation:
+    needs: livraison
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - run: gh issue create --title "mon titre" --body "le body"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
