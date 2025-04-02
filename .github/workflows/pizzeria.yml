@@ -1,0 +1,23 @@
+name: "pizzeria"
+
+on: 
+  workflow_dispatch:
+    inputs:
+      nom_client:
+        description: "pour identifier le client"
+        required: true
+      pizzas:
+        description: |
+            "Liste des pizzas au format JSON. Attention aux points importants:
+            ["margherita","reine","calzone"]"
+        required: true
+jobs:
+  reception-commande:
+    runs-on: "ubuntu-latest"
+    outputs:
+      
+    steps:
+      - id: 123456
+        run: |
+        echo "client_name=${{ github.event.inputs.nom_client }}" >> $GITHUB_OUTPUT
+        echo "pizza=${{ github.event.inputs.pizzas }}" >> $GITHUB_OUTPUT
