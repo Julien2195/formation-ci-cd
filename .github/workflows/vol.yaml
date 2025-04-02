@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
         conclusion: echo ${{needs.policier-video.video }}
-    steps:
+    steps: 
     - run: echo "conclusion=${ANALYSE_EMPREINTE}, ${ANALYSE_VIDEO}, texte à ajouter" >> "$GITHUB_OUTPUT"
 
 
